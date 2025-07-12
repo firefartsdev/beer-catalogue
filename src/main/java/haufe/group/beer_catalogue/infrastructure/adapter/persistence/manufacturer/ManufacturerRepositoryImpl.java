@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -28,11 +29,10 @@ public class ManufacturerRepositoryImpl implements ManufacturerRepository {
     }
 
     @Override
-    public Manufacturer findById(UUID manufacturerId) {
+    public Optional<Manufacturer> findById(UUID manufacturerId) {
         final var manufacturer = this.manufacturerJPARepository.findById(manufacturerId);
         return manufacturer
-                .map(this.manufacturerJPAMapper::toDomain)
-                .orElse(null);
+                .map(this.manufacturerJPAMapper::toDomain);
     }
 
     @Override
@@ -43,13 +43,9 @@ public class ManufacturerRepositoryImpl implements ManufacturerRepository {
 
     @Override
     public Manufacturer update(UUID manufacturerId, Manufacturer manufacturer) {
-        return this.manufacturerJPARepository.findById(manufacturerId)
-                .map(existingManufacturer -> {
-                    final var manufacturerToUpdate = new ManufacturerJPAEntity(manufacturerId, manufacturer.name(), manufacturer.country());
-                    final var updatedManufacturer = this.manufacturerJPARepository.save(manufacturerToUpdate);
-                    return this.manufacturerJPAMapper.toDomain(updatedManufacturer);
-                })
-                .orElse(null);
+        final var manufacturerToUpdate = new ManufacturerJPAEntity(manufacturerId, manufacturer.name(), manufacturer.country());
+        final var updatedManufacturer = this.manufacturerJPARepository.save(manufacturerToUpdate);
+        return this.manufacturerJPAMapper.toDomain(updatedManufacturer);
     }
 
     @Override

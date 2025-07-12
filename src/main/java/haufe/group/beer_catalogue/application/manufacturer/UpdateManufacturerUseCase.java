@@ -10,12 +10,13 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class GetManufacturerUseCase {
+public class UpdateManufacturerUseCase {
 
     private final ManufacturerRepository manufacturerRepository;
 
-    public Manufacturer getManufacturer(final UUID manufacturerId) {
-        return this.manufacturerRepository.findById(manufacturerId)
+    public Manufacturer updateManufacturer(final UUID manufacturerId, final Manufacturer manufacturer) {
+        final var manufacturerToUpdate = this.manufacturerRepository.findById(manufacturerId)
                 .orElseThrow(() -> new EntityNotFoundException("Manufacturer", manufacturerId));
+        return this.manufacturerRepository.update(manufacturerToUpdate.id(), manufacturer);
     }
 }
