@@ -1,8 +1,7 @@
 package haufe.group.beer_catalogue.infrastructure.adapter.rest.manufacturer;
 
-import haufe.group.beer_catalogue.application.manufacturer.CreateManufacturerUseCase;
-import haufe.group.beer_catalogue.application.manufacturer.GetManufacturerUseCase;
-import haufe.group.beer_catalogue.application.manufacturer.ListManufacturersUseCase;
+import haufe.group.beer_catalogue.application.manufacturer.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +21,8 @@ public class ManufacturerController {
     private final CreateManufacturerUseCase createManufacturerUseCase;
     private final ListManufacturersUseCase listManufacturersUseCase;
     private final GetManufacturerUseCase getManufacturerUseCase;
+    private final UpdateManufacturerUseCase updateManufacturerUseCase;
+    private final DeleteManufacturerUseCase deleteManufacturerUseCase;
 
     @GetMapping
     public ResponseEntity<List<ManufacturerDTO>> list() {
@@ -36,18 +37,20 @@ public class ManufacturerController {
     }
 
     @PostMapping
-    public ResponseEntity<ManufacturerDTO> create(@RequestBody ManufacturerDTO manufacturerDTO) {
+    public ResponseEntity<ManufacturerDTO> create(@RequestBody @Valid ManufacturerDTO manufacturerDTO) {
         final var createdManufacturer = this.createManufacturerUseCase.createManufacturer(this.manufacturerDTOMapper.toDomain(manufacturerDTO));
         return ResponseEntity.status(CREATED).body(this.manufacturerDTOMapper.toDTO(createdManufacturer));
     }
 
     @PutMapping("{manufacturerId}")
     public ResponseEntity<ManufacturerDTO> update(@PathVariable UUID manufacturerId, @RequestBody ManufacturerDTO manufacturerDTO) {
-        return ResponseEntity.ok(new ManufacturerDTO(manufacturerId, "updated name", "updated country"));
+        final var updatedManufacturer = this.updateManufacturerUseCase.updateManufacturer(manufacturerId, this.manufacturerDTOMapper.toDomain(manufacturerDTO));
+        return ResponseEntity.ok(this.manufacturerDTOMapper.toDTO(updatedManufacturer));
     }
 
     @DeleteMapping("/{manufacturerId}")
     public ResponseEntity<Void> delete(@PathVariable UUID manufacturerId) {
+        this.deleteManufacturerUseCase.deleteManufacturer(manufacturerId);
         return ResponseEntity.noContent().build();
     }
 
