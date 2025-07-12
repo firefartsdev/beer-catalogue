@@ -2,11 +2,16 @@ package haufe.group.beer_catalogue.infrastructure.adapter.persistence.beer;
 
 import haufe.group.beer_catalogue.infrastructure.adapter.persistence.manufacturer.ManufacturerJPAEntity;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "beers")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class BeerJPAEntity {
 
     @Id
@@ -18,7 +23,7 @@ public class BeerJPAEntity {
     private String name;
 
     @Column(nullable = false)
-    private double abv;
+    private Double abv;
 
     @Column(nullable = false)
     private String type;
@@ -30,17 +35,4 @@ public class BeerJPAEntity {
     @JoinColumn(name = "manufacturer_id", nullable = false)
     private ManufacturerJPAEntity manufacturer;
 
-    // Constructors
-
-    public BeerJPAEntity() {
-    }
-
-    public BeerJPAEntity(UUID id, String name, double abv, String type, String description, ManufacturerJPAEntity manufacturer) {
-        this.id = id;
-        this.name = name;
-        this.abv = abv;
-        this.type = type;
-        this.description = description;
-        this.manufacturer = manufacturer;
-    }
 }

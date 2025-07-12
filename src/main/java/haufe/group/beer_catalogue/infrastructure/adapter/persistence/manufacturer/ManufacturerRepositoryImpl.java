@@ -2,7 +2,6 @@ package haufe.group.beer_catalogue.infrastructure.adapter.persistence.manufactur
 
 import haufe.group.beer_catalogue.domain.manufacturer.entity.Manufacturer;
 import haufe.group.beer_catalogue.domain.manufacturer.port.ManufacturerRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -11,16 +10,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
+@RequiredArgsConstructor
 public class ManufacturerRepositoryImpl implements ManufacturerRepository {
 
     private final ManufacturerJPARepository manufacturerJPARepository;
 
     private final ManufacturerJPAMapper manufacturerJPAMapper;
-
-    public ManufacturerRepositoryImpl(final ManufacturerJPARepository manufacturerJPARepository, final ManufacturerJPAMapper manufacturerJPAMapper) {
-        this.manufacturerJPARepository = manufacturerJPARepository;
-        this.manufacturerJPAMapper = manufacturerJPAMapper;
-    }
 
     @Override
     public List<Manufacturer> findAll() {
