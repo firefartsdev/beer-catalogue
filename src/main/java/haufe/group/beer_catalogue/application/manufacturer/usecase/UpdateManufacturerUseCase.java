@@ -1,4 +1,4 @@
-package haufe.group.beer_catalogue.application.manufacturer;
+package haufe.group.beer_catalogue.application.manufacturer.usecase;
 
 import haufe.group.beer_catalogue.application.exception.EntityNotFoundException;
 import haufe.group.beer_catalogue.domain.manufacturer.entity.Manufacturer;

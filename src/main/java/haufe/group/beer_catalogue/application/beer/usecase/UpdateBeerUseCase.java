@@ -1,10 +1,9 @@
-package haufe.group.beer_catalogue.application.beer;
+package haufe.group.beer_catalogue.application.beer.usecase;
 
 import haufe.group.beer_catalogue.application.exception.EntityNotFoundException;
 import haufe.group.beer_catalogue.domain.beer.entity.Beer;
 import haufe.group.beer_catalogue.domain.beer.port.BeerRepository;
 import haufe.group.beer_catalogue.domain.manufacturer.port.ManufacturerRepository;
-import haufe.group.beer_catalogue.infrastructure.adapter.persistence.manufacturer.ManufacturerRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

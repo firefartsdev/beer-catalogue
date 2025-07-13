@@ -1,7 +1,7 @@
 package haufe.group.beer_catalogue.infrastructure.adapter.rest.beer;
 
 import haufe.group.beer_catalogue.application.beer.*;
-import haufe.group.beer_catalogue.application.manufacturer.ManufacturerSort;
+import haufe.group.beer_catalogue.application.beer.usecase.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
