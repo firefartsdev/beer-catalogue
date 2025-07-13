@@ -1,6 +1,7 @@
 package haufe.group.beer_catalogue.infrastructure.adapter.rest.beer;
 
 import haufe.group.beer_catalogue.application.beer.*;
+import haufe.group.beer_catalogue.application.manufacturer.ManufacturerSort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +25,12 @@ public class BeerController {
     private final BeerDTOMapper beerDTOMapper;
 
     @GetMapping
-    public ResponseEntity<List<BeerDTO>> list() {
-        final var beers = this.listBeersUseCase.listBeers();
+    public ResponseEntity<List<BeerDTO>> list(
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "ASC") String order
+    ) {
+        final var sort = new BeerSort(order, sortBy);
+        final var beers = this.listBeersUseCase.listBeers(sort);
         return ResponseEntity.ok(this.beerDTOMapper.toDTOList(beers));
     }
 

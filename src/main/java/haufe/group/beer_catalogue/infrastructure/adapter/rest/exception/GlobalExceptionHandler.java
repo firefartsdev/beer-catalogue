@@ -1,7 +1,7 @@
 package haufe.group.beer_catalogue.infrastructure.adapter.rest.exception;
 
 import haufe.group.beer_catalogue.application.exception.EntityNotFoundException;
-import org.apache.coyote.Response;
+import haufe.group.beer_catalogue.application.exception.InvalidSortCriteriaException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,6 +28,11 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.joining(" | "));
         return ResponseEntity.badRequest()
                 .body(new ErrorDTO("VALIDATION_EXCEPTION", errors));
+    }
+
+    @ExceptionHandler(InvalidSortCriteriaException.class)
+    public ResponseEntity<ErrorDTO> handleInvalidSortCriteriaException(final InvalidSortCriteriaException e) {
+        return ResponseEntity.badRequest().body(new ErrorDTO("INVALID_SORT_CRITERIA", e.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)

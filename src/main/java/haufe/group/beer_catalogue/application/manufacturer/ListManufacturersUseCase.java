@@ -13,7 +13,7 @@ public class ListManufacturersUseCase {
 
     private final ManufacturerRepository manufacturerRepository;
 
-    public List<Manufacturer> listManufacturers() {
-        return manufacturerRepository.findAll();
+    public List<Manufacturer> listManufacturers(ManufacturerSort sort) {
+        return manufacturerRepository.findAll(sort);
     }
 }

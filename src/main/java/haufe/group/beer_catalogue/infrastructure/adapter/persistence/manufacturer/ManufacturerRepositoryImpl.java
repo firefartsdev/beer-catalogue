@@ -1,8 +1,11 @@
 package haufe.group.beer_catalogue.infrastructure.adapter.persistence.manufacturer;
 
+import haufe.group.beer_catalogue.application.manufacturer.ManufacturerSort;
 import haufe.group.beer_catalogue.domain.manufacturer.entity.Manufacturer;
 import haufe.group.beer_catalogue.domain.manufacturer.port.ManufacturerRepository;
+import haufe.group.beer_catalogue.infrastructure.adapter.rest.SortDirection;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,8 +21,11 @@ public class ManufacturerRepositoryImpl implements ManufacturerRepository {
     private final ManufacturerJPAMapper manufacturerJPAMapper;
 
     @Override
-    public List<Manufacturer> findAll() {
-        final var manufacturers = this.manufacturerJPARepository.findAll();
+    public List<Manufacturer> findAll(ManufacturerSort sort) {
+        Sort.Direction direction = sort.getDirection().equals(SortDirection.ASC.toString()) ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort jpsSort = Sort.by(direction, sort.getSortBy());
+
+        final var manufacturers = this.manufacturerJPARepository.findAll(jpsSort);
         return this.manufacturerJPAMapper.toDomainList(manufacturers);
     }
 

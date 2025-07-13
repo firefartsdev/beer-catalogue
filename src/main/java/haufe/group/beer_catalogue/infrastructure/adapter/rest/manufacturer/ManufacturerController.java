@@ -1,6 +1,7 @@
 package haufe.group.beer_catalogue.infrastructure.adapter.rest.manufacturer;
 
 import haufe.group.beer_catalogue.application.manufacturer.*;
+import haufe.group.beer_catalogue.application.manufacturer.ManufacturerSort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,12 @@ public class ManufacturerController {
     private final DeleteManufacturerUseCase deleteManufacturerUseCase;
 
     @GetMapping
-    public ResponseEntity<List<ManufacturerDTO>> list() {
-        final var manufacturers = this.listManufacturersUseCase.listManufacturers();
+    public ResponseEntity<List<ManufacturerDTO>> list(
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "ASC") String order
+    ) {
+        final var sort = new ManufacturerSort(order, sortBy);
+        final var manufacturers = this.listManufacturersUseCase.listManufacturers(sort);
         return ResponseEntity.ok(this.manufacturerDTOMapper.toDTOList(manufacturers));
     }
 

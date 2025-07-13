@@ -1,5 +1,6 @@
 package haufe.group.beer_catalogue.domain.beer.port;
 
+import haufe.group.beer_catalogue.application.beer.BeerSort;
 import haufe.group.beer_catalogue.domain.beer.entity.Beer;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.UUID;
 
 public interface BeerRepository {
 
-    List<Beer> findAll();
+    List<Beer> findAll(BeerSort sort);
 
     Optional<Beer> findById(UUID beerId);
 

@@ -13,7 +13,7 @@ public class ListBeersUseCase {
 
     private final BeerRepository beerRepository;
 
-    public List<Beer> listBeers() {
-        return this.beerRepository.findAll();
+    public List<Beer> listBeers(BeerSort sort) {
+        return this.beerRepository.findAll(sort);
     }
 }

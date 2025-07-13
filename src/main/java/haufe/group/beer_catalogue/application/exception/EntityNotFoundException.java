@@ -2,9 +2,9 @@ package haufe.group.beer_catalogue.application.exception;
 
 import java.util.UUID;
 
-public class EntityNotFoundException extends ApplicationException {
+public class EntityNotFoundException extends RuntimeException {
 
     public EntityNotFoundException(String entityName, UUID id) {
-        super("NOT_FOUND", entityName + " with id " + id + " not found");
+        super(entityName + " with id " + id + " not found");
     }
 }
