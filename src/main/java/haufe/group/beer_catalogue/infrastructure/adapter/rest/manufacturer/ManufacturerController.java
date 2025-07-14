@@ -1,14 +1,13 @@
 package haufe.group.beer_catalogue.infrastructure.adapter.rest.manufacturer;
 
-import haufe.group.beer_catalogue.application.manufacturer.ManufacturerSort;
-import haufe.group.beer_catalogue.application.manufacturer.usecase.*;
+import haufe.group.beer_catalogue.application.manufacturer.*;
+import haufe.group.beer_catalogue.domain.manufacturer.vo.ManufacturerSort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;

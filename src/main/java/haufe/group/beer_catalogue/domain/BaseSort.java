@@ -1,4 +1,4 @@
-package haufe.group.beer_catalogue.application;
+package haufe.group.beer_catalogue.domain;
 
 import haufe.group.beer_catalogue.application.exception.InvalidSortCriteriaException;
 import lombok.Getter;

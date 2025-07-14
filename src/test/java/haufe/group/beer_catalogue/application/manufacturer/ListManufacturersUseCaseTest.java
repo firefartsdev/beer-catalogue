@@ -1,9 +1,8 @@
 package haufe.group.beer_catalogue.application.manufacturer;
 
-import haufe.group.beer_catalogue.application.manufacturer.usecase.ListManufacturersUseCase;
 import haufe.group.beer_catalogue.domain.manufacturer.entity.Manufacturer;
 import haufe.group.beer_catalogue.domain.manufacturer.port.ManufacturerRepository;
-import haufe.group.beer_catalogue.infrastructure.adapter.rest.manufacturer.ManufacturerDTO;
+import haufe.group.beer_catalogue.domain.manufacturer.vo.ManufacturerSort;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

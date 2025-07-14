@@ -1,6 +1,5 @@
 package haufe.group.beer_catalogue.application.beer;
 
-import haufe.group.beer_catalogue.application.beer.usecase.CreateBeerUseCase;
 import haufe.group.beer_catalogue.application.exception.EntityNotFoundException;
 import haufe.group.beer_catalogue.domain.beer.entity.Beer;
 import haufe.group.beer_catalogue.domain.beer.port.BeerRepository;

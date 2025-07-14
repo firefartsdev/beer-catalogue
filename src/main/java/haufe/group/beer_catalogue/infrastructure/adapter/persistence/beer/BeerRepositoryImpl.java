@@ -1,17 +1,19 @@
 package haufe.group.beer_catalogue.infrastructure.adapter.persistence.beer;
 
-import haufe.group.beer_catalogue.application.beer.BeerSort;
+import haufe.group.beer_catalogue.domain.beer.vo.BeerSearchCriteria;
+import haufe.group.beer_catalogue.domain.beer.vo.BeerSort;
 import haufe.group.beer_catalogue.domain.beer.entity.Beer;
 import haufe.group.beer_catalogue.domain.beer.port.BeerRepository;
+import haufe.group.beer_catalogue.infrastructure.adapter.persistence.beer.spec.BeerSpecification;
 import haufe.group.beer_catalogue.infrastructure.adapter.persistence.manufacturer.ManufacturerJPAMapper;
 import haufe.group.beer_catalogue.infrastructure.adapter.rest.SortDirection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,6 +34,17 @@ public class BeerRepositoryImpl implements BeerRepository {
 
         final var beers = beerJPARepository.findAll(pageable);
         return beers.map(this.beerJPAMapper::toDomain);
+    }
+
+    @Override
+    public Page<Beer> search(BeerSearchCriteria criteria, BeerSort sort, int page, int size) {
+        Specification<BeerJPAEntity> spec = this.beerJPAMapper.fromCriteria(criteria);
+        Sort.Direction direction = sort.getDirection().equals(SortDirection.ASC.toString()) ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort jpsSort = Sort.by(direction, sort.getSortBy());
+        final var pageable = PageRequest.of(page, size, jpsSort);
+
+        return beerJPARepository.findAll(spec, pageable)
+                .map(this.beerJPAMapper::toDomain);
     }
 
     @Override

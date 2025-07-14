@@ -1,4 +1,4 @@
-package haufe.group.beer_catalogue.application.manufacturer.usecase;
+package haufe.group.beer_catalogue.application.manufacturer;
 
 import haufe.group.beer_catalogue.domain.manufacturer.entity.Manufacturer;
 import haufe.group.beer_catalogue.domain.manufacturer.port.ManufacturerRepository;

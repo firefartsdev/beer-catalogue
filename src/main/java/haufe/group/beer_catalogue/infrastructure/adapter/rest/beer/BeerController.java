@@ -1,13 +1,15 @@
 package haufe.group.beer_catalogue.infrastructure.adapter.rest.beer;
 
 import haufe.group.beer_catalogue.application.beer.*;
-import haufe.group.beer_catalogue.application.beer.usecase.*;
+import haufe.group.beer_catalogue.domain.beer.vo.BeerSort;
+import haufe.group.beer_catalogue.infrastructure.adapter.rest.beer.dto.BeerDTO;
+import haufe.group.beer_catalogue.infrastructure.adapter.rest.beer.dto.BeerSearchRequestDTO;
+import haufe.group.beer_catalogue.infrastructure.adapter.rest.beer.dto.CreateBeerRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -22,6 +24,7 @@ public class BeerController {
     private final CreateBeerUseCase createBeerUseCase;
     private final UpdateBeerUseCase updateBeerUseCase;
     private final DeleteBeerUseCase deleteBeerUseCase;
+    private final SearchBeersUseCase searchBeersUseCase;
 
     private final BeerDTOMapper beerDTOMapper;
 
@@ -61,6 +64,16 @@ public class BeerController {
     public ResponseEntity<Void> delete(@PathVariable UUID beerId) {
         this.deleteBeerUseCase.deleteBeer(beerId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<Page<BeerDTO>> search(@RequestBody BeerSearchRequestDTO beerSearchRequestDTO) {
+        final var criteria = this.beerDTOMapper.toCriteria(beerSearchRequestDTO);
+        final var pageable = beerSearchRequestDTO.resolvedPageable();
+
+        final var beers = this.searchBeersUseCase.searchBeers(criteria, beerSearchRequestDTO.resolvedSort(), pageable.getPageNumber(), pageable.getPageSize());
+        final var paginatedBeers = beers.map(this.beerDTOMapper::toDTO);
+        return ResponseEntity.ok(paginatedBeers);
     }
 
 }

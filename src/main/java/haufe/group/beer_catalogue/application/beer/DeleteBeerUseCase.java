@@ -1,4 +1,4 @@
-package haufe.group.beer_catalogue.application.beer.usecase;
+package haufe.group.beer_catalogue.application.beer;
 
 import haufe.group.beer_catalogue.domain.beer.port.BeerRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package haufe.group.beer_catalogue.infrastructure.adapter.rest.beer;
+package haufe.group.beer_catalogue.infrastructure.adapter.rest.beer.dto;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;

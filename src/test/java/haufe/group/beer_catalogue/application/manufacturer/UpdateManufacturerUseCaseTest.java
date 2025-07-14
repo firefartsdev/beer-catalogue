@@ -1,7 +1,6 @@
 package haufe.group.beer_catalogue.application.manufacturer;
 
 import haufe.group.beer_catalogue.application.exception.EntityNotFoundException;
-import haufe.group.beer_catalogue.application.manufacturer.usecase.UpdateManufacturerUseCase;
 import haufe.group.beer_catalogue.domain.manufacturer.entity.Manufacturer;
 import haufe.group.beer_catalogue.domain.manufacturer.port.ManufacturerRepository;
 import org.junit.jupiter.api.Test;

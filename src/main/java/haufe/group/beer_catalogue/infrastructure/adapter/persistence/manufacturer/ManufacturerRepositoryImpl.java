@@ -1,6 +1,6 @@
 package haufe.group.beer_catalogue.infrastructure.adapter.persistence.manufacturer;
 
-import haufe.group.beer_catalogue.application.manufacturer.ManufacturerSort;
+import haufe.group.beer_catalogue.domain.manufacturer.vo.ManufacturerSort;
 import haufe.group.beer_catalogue.domain.manufacturer.entity.Manufacturer;
 import haufe.group.beer_catalogue.domain.manufacturer.port.ManufacturerRepository;
 import haufe.group.beer_catalogue.infrastructure.adapter.rest.SortDirection;
@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 

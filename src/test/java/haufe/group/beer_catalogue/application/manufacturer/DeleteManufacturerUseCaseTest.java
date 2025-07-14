@@ -1,6 +1,5 @@
 package haufe.group.beer_catalogue.application.manufacturer;
 
-import haufe.group.beer_catalogue.application.manufacturer.usecase.DeleteManufacturerUseCase;
 import haufe.group.beer_catalogue.domain.manufacturer.port.ManufacturerRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,8 +1,8 @@
 package haufe.group.beer_catalogue.application.beer;
 
-import haufe.group.beer_catalogue.application.beer.usecase.ListBeersUseCase;
 import haufe.group.beer_catalogue.domain.beer.entity.Beer;
 import haufe.group.beer_catalogue.domain.beer.port.BeerRepository;
+import haufe.group.beer_catalogue.domain.beer.vo.BeerSort;
 import haufe.group.beer_catalogue.domain.manufacturer.entity.Manufacturer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

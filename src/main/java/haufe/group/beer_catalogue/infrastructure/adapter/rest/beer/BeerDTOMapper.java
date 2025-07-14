@@ -1,6 +1,10 @@
 package haufe.group.beer_catalogue.infrastructure.adapter.rest.beer;
 
 import haufe.group.beer_catalogue.domain.beer.entity.Beer;
+import haufe.group.beer_catalogue.domain.beer.vo.BeerSearchCriteria;
+import haufe.group.beer_catalogue.infrastructure.adapter.rest.beer.dto.BeerDTO;
+import haufe.group.beer_catalogue.infrastructure.adapter.rest.beer.dto.BeerSearchRequestDTO;
+import haufe.group.beer_catalogue.infrastructure.adapter.rest.beer.dto.CreateBeerRequestDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -17,4 +21,6 @@ public interface BeerDTOMapper {
 
     BeerDTO toDTO(Beer beer);
     List<BeerDTO> toDTOList(List<Beer> beers);
+
+    BeerSearchCriteria toCriteria(BeerSearchRequestDTO dto);
 }

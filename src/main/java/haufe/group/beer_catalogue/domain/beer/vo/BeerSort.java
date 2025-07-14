@@ -1,6 +1,6 @@
-package haufe.group.beer_catalogue.application.beer;
+package haufe.group.beer_catalogue.domain.beer.vo;
 
-import haufe.group.beer_catalogue.application.BaseSort;
+import haufe.group.beer_catalogue.domain.BaseSort;
 import java.util.List;
 
 public class BeerSort extends BaseSort {
