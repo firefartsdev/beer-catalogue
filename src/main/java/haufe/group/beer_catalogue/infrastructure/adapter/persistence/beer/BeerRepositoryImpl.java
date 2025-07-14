@@ -6,6 +6,8 @@ import haufe.group.beer_catalogue.domain.beer.port.BeerRepository;
 import haufe.group.beer_catalogue.infrastructure.adapter.persistence.manufacturer.ManufacturerJPAMapper;
 import haufe.group.beer_catalogue.infrastructure.adapter.rest.SortDirection;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
@@ -23,12 +25,13 @@ public class BeerRepositoryImpl implements BeerRepository {
     private final ManufacturerJPAMapper manufacturerJPAMapper;
 
     @Override
-    public List<Beer> findAll(BeerSort sort) {
+    public Page<Beer> findAll(BeerSort sort, int page, int size) {
         Sort.Direction direction = sort.getDirection().equals(SortDirection.ASC.toString()) ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort jpsSort = Sort.by(direction, sort.getSortBy());
+        final var pageable = PageRequest.of(page, size, jpsSort);
 
-        final var beers = beerJPARepository.findAll(jpsSort);
-        return this.beerJPAMapper.toDomainList(beers);
+        final var beers = beerJPARepository.findAll(pageable);
+        return beers.map(this.beerJPAMapper::toDomain);
     }
 
     @Override

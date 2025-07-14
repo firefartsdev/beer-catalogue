@@ -3,11 +3,15 @@ package haufe.group.beer_catalogue.application.manufacturer;
 import haufe.group.beer_catalogue.application.manufacturer.usecase.ListManufacturersUseCase;
 import haufe.group.beer_catalogue.domain.manufacturer.entity.Manufacturer;
 import haufe.group.beer_catalogue.domain.manufacturer.port.ManufacturerRepository;
+import haufe.group.beer_catalogue.infrastructure.adapter.rest.manufacturer.ManufacturerDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,13 +31,20 @@ class ListManufacturersUseCaseTest {
     @Test
     void shouldListManufacturersWithSorting() {
         ManufacturerSort sort = new ManufacturerSort("ASC", "name");
-        List<Manufacturer> expected = List.of(new Manufacturer(UUID.randomUUID(), "Brew Co", "Spain"));
+        int page = 0;
+        int size = 2;
 
-        when(manufacturerRepository.findAll(sort)).thenReturn(expected);
+        List<Manufacturer> expected = List.of(
+                new Manufacturer(UUID.randomUUID(), "Brew Co", "Spain"),
+                new Manufacturer(UUID.randomUUID(), "Brew Co 2", "Spain"));
+        Page<Manufacturer> expectedPage = new PageImpl<>(expected, PageRequest.of(page, size), 10);
 
-        List<Manufacturer> result = useCase.listManufacturers(sort);
+        when(manufacturerRepository.findAll(sort, page, size)).thenReturn(expectedPage);
 
-        assertEquals(expected, result);
-        verify(manufacturerRepository).findAll(sort);
+        Page<Manufacturer> result = useCase.listManufacturers(sort, page, size);
+
+        assertEquals(2, result.getContent().size());
+        assertEquals("Brew Co 2", result.getContent().get(1).name());
+        verify(manufacturerRepository).findAll(sort, page, size);
     }
 }

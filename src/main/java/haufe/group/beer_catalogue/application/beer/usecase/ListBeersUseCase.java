@@ -4,9 +4,9 @@ import haufe.group.beer_catalogue.application.beer.BeerSort;
 import haufe.group.beer_catalogue.domain.beer.entity.Beer;
 import haufe.group.beer_catalogue.domain.beer.port.BeerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -14,7 +14,7 @@ public class ListBeersUseCase {
 
     private final BeerRepository beerRepository;
 
-    public List<Beer> listBeers(BeerSort sort) {
-        return this.beerRepository.findAll(sort);
+    public Page<Beer> listBeers(final BeerSort sort, final int page, final int size) {
+        return this.beerRepository.findAll(sort, page, size);
     }
 }

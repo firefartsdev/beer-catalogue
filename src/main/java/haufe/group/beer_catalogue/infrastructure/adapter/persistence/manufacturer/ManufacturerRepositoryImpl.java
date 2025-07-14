@@ -5,6 +5,8 @@ import haufe.group.beer_catalogue.domain.manufacturer.entity.Manufacturer;
 import haufe.group.beer_catalogue.domain.manufacturer.port.ManufacturerRepository;
 import haufe.group.beer_catalogue.infrastructure.adapter.rest.SortDirection;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
@@ -21,12 +23,13 @@ public class ManufacturerRepositoryImpl implements ManufacturerRepository {
     private final ManufacturerJPAMapper manufacturerJPAMapper;
 
     @Override
-    public List<Manufacturer> findAll(ManufacturerSort sort) {
+    public Page<Manufacturer> findAll(ManufacturerSort sort, int page, int size) {
         Sort.Direction direction = sort.getDirection().equals(SortDirection.ASC.toString()) ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort jpsSort = Sort.by(direction, sort.getSortBy());
+        final var pageable = PageRequest.of(page, size, jpsSort);
 
-        final var manufacturers = this.manufacturerJPARepository.findAll(jpsSort);
-        return this.manufacturerJPAMapper.toDomainList(manufacturers);
+        final var manufacturers = this.manufacturerJPARepository.findAll(pageable);
+        return manufacturers.map(this.manufacturerJPAMapper::toDomain);
     }
 
     @Override

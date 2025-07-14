@@ -3,6 +3,7 @@ package haufe.group.beer_catalogue.infrastructure.adapter.rest.beer;
 import haufe.group.beer_catalogue.application.beer.*;
 import haufe.group.beer_catalogue.application.beer.usecase.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,13 +26,17 @@ public class BeerController {
     private final BeerDTOMapper beerDTOMapper;
 
     @GetMapping
-    public ResponseEntity<List<BeerDTO>> list(
+    public ResponseEntity<Page<BeerDTO>> list(
             @RequestParam(defaultValue = "name") String sortBy,
-            @RequestParam(defaultValue = "ASC") String order
+            @RequestParam(defaultValue = "ASC") String order,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+
     ) {
         final var sort = new BeerSort(order, sortBy);
-        final var beers = this.listBeersUseCase.listBeers(sort);
-        return ResponseEntity.ok(this.beerDTOMapper.toDTOList(beers));
+        final var beers = this.listBeersUseCase.listBeers(sort, page, size);
+        final var paginatedBeers = beers.map(this.beerDTOMapper::toDTO);
+        return ResponseEntity.ok(paginatedBeers);
     }
 
     @GetMapping("/{beerId}")

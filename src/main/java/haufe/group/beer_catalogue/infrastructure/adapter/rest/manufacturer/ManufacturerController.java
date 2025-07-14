@@ -4,6 +4,7 @@ import haufe.group.beer_catalogue.application.manufacturer.ManufacturerSort;
 import haufe.group.beer_catalogue.application.manufacturer.usecase.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,13 +27,16 @@ public class ManufacturerController {
     private final DeleteManufacturerUseCase deleteManufacturerUseCase;
 
     @GetMapping
-    public ResponseEntity<List<ManufacturerDTO>> list(
+    public ResponseEntity<Page<ManufacturerDTO>> list(
             @RequestParam(defaultValue = "name") String sortBy,
-            @RequestParam(defaultValue = "ASC") String order
+            @RequestParam(defaultValue = "ASC") String order,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
     ) {
         final var sort = new ManufacturerSort(order, sortBy);
-        final var manufacturers = this.listManufacturersUseCase.listManufacturers(sort);
-        return ResponseEntity.ok(this.manufacturerDTOMapper.toDTOList(manufacturers));
+        final var manufacturers = this.listManufacturersUseCase.listManufacturers(sort, page, size);
+        final var paginatedManufacturers = manufacturers.map(this.manufacturerDTOMapper::toDTO);
+        return ResponseEntity.ok(paginatedManufacturers);
     }
 
     @GetMapping("/{manufacturerId}")
