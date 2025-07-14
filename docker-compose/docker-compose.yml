@@ -15,6 +15,21 @@ services:
     networks:
       - springnet
 
+  app:
+    build:
+      context: ..
+    container_name: beer_backend
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+    networks:
+      - springnet
+
 volumes:
   pgdata:
 
