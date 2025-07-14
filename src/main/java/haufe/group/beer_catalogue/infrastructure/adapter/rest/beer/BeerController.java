@@ -5,8 +5,10 @@ import haufe.group.beer_catalogue.domain.beer.vo.BeerSort;
 import haufe.group.beer_catalogue.infrastructure.adapter.rest.beer.dto.BeerDTO;
 import haufe.group.beer_catalogue.infrastructure.adapter.rest.beer.dto.BeerSearchRequestDTO;
 import haufe.group.beer_catalogue.infrastructure.adapter.rest.beer.dto.CreateBeerRequestDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,9 +50,9 @@ public class BeerController {
         return ResponseEntity.ok(this.beerDTOMapper.toDTO(beer));
     }
 
-    @PostMapping
-    public ResponseEntity<BeerDTO> create(@RequestBody CreateBeerRequestDTO createBeerRequestDTO) {
-        final var createdBeer = this.createBeerUseCase.createBeer(this.beerDTOMapper.toDomainFromCreate(createBeerRequestDTO));
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<BeerDTO> create(@ModelAttribute @Valid CreateBeerRequestDTO createBeerRequestDTO) {
+        final var createdBeer = this.createBeerUseCase.createBeer(this.beerDTOMapper.toDomainFromCreate(createBeerRequestDTO), createBeerRequestDTO.getImage());
         return ResponseEntity.status(CREATED).body(this.beerDTOMapper.toDTO(createdBeer));
     }
 

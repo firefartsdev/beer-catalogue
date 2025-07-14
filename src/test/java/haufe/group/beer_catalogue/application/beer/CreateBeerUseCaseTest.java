@@ -35,13 +35,13 @@ class CreateBeerUseCaseTest {
         UUID manufacturerId = UUID.randomUUID();
         UUID beerId = UUID.randomUUID();
         Manufacturer manufacturer = new Manufacturer(manufacturerId, "Brew Co.", "Spain");
-        Beer inputBeer = new Beer(beerId, "Test Beer", 5.0, "IPA", "Nice IPA", manufacturer);
+        Beer inputBeer = new Beer(beerId, "Test Beer", 5.0, "IPA", "Nice IPA", manufacturer, null, null);
 
         when(manufacturerRepository.findById(manufacturerId)).thenReturn(Optional.of(manufacturer));
         when(beerRepository.create(any(Beer.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        Beer result = createBeerUseCase.createBeer(inputBeer);
+        Beer result = createBeerUseCase.createBeer(inputBeer, null);
 
         // Assert
         assertNotNull(result);
@@ -61,13 +61,13 @@ class CreateBeerUseCaseTest {
         UUID manufacturerId = UUID.randomUUID();
         UUID beerId = UUID.randomUUID();
         Manufacturer manufacturer = new Manufacturer(manufacturerId, "Unknown", "Unknown");
-        Beer inputBeer = new Beer(beerId, "Ghost Beer", 6.0, "Lager", "No brewer", manufacturer);
+        Beer inputBeer = new Beer(beerId, "Ghost Beer", 6.0, "Lager", "No brewer", manufacturer, null, null);
 
         when(manufacturerRepository.findById(manufacturerId)).thenReturn(Optional.empty());
 
         // Act & Assert
         EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () ->
-                createBeerUseCase.createBeer(inputBeer)
+                createBeerUseCase.createBeer(inputBeer, null)
         );
 
         assertEquals("Manufacturer with id %s not found".formatted(manufacturerId), ex.getMessage());

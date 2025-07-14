@@ -4,5 +4,5 @@ import haufe.group.beer_catalogue.infrastructure.adapter.rest.manufacturer.Manuf
 
 import java.util.UUID;
 
-public record BeerDTO(UUID id, String name, Double abv, String type, String description, ManufacturerDTO manufacturer, String image, String imageBase64) {
+public record BeerDetailDTO(UUID id, String name, Double abv, String type, String description, ManufacturerDTO manufacturer, String image) {
 }

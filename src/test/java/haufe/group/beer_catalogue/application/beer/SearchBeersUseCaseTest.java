@@ -36,7 +36,7 @@ class SearchBeersUseCaseTest {
         int size = 10;
 
         Manufacturer mockedManufacturer = mock(Manufacturer.class);
-        Beer dummyBeer = new Beer(UUID.randomUUID(), "Sample Beer", 5.0, "ale", "A description", mockedManufacturer);
+        Beer dummyBeer = new Beer(UUID.randomUUID(), "Sample Beer", 5.0, "ale", "A description", mockedManufacturer, null, null);
         Page<Beer> dummyResult = new PageImpl<>(List.of(dummyBeer));
 
         when(beerRepository.search(criteria, sort, page, size)).thenReturn(dummyResult);

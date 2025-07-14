@@ -6,18 +6,33 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-public record CreateBeerRequestDTO(
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
+
+
+@Getter
+@Setter
+public class CreateBeerRequestDTO {
+
         @NotBlank(message = "Cannot be empty")
         @NotNull(message = "Mandatory field")
-        String name,
+        private String name;
+
         @NotNull
         @DecimalMin(value = "0.0", inclusive = true, message = "Cannot be negative")
-        Double abv,
+        private Double abv;
+
         @NotBlank(message = "Cannot be empty")
         @NotNull(message = "Mandatory field")
-        String type,
-        String description,
+        private String type;
+
+        private String description;
+
         @NotNull
-        UUID manufacturerId
-) {
+        private UUID manufacturerId;
+
+        @NotNull
+        private MultipartFile image;
 }
+

@@ -37,8 +37,8 @@ class ListBeersUseCaseTest {
         int size = 2;
 
         Manufacturer manufacturer = mock(Manufacturer.class);
-        Beer beer1 = new Beer(UUID.randomUUID(), "Beer 1", 5.0, "IPA", "description", manufacturer);
-        Beer beer2 = new Beer(UUID.randomUUID(), "Beer 2", 6.0, "IPA", "description", manufacturer);
+        Beer beer1 = new Beer(UUID.randomUUID(), "Beer 1", 5.0, "IPA", "description", manufacturer, null, null);
+        Beer beer2 = new Beer(UUID.randomUUID(), "Beer 2", 6.0, "IPA", "description", manufacturer, null, null);
         List<Beer> content = List.of(beer1, beer2);
         Page<Beer> expectedPage = new PageImpl<>(content, PageRequest.of(page, size), 10);
 

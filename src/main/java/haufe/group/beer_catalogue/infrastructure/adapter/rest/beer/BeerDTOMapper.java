@@ -16,7 +16,7 @@ public interface BeerDTOMapper {
     Beer toDomain(BeerDTO dto);
     List<Beer> toDomainList(List<BeerDTO> dtos);
 
-    @Mapping(target = "manufacturer", expression = "java(new Manufacturer(dto.manufacturerId(), null, null))")
+    @Mapping(target = "manufacturer", expression = "java(new Manufacturer(dto.getManufacturerId(), null, null))")
     Beer toDomainFromCreate(CreateBeerRequestDTO dto);
 
     BeerDTO toDTO(Beer beer);

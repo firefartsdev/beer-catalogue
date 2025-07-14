@@ -62,8 +62,7 @@ public class BeerRepositoryImpl implements BeerRepository {
 
     @Override
     public Beer update(UUID beerId, Beer beer) {
-        final var manufacturer = this.manufacturerJPAMapper.toJpa(beer.manufacturer());
-        final var beerToUpdate = new BeerJPAEntity(beerId, beer.name(), beer.abv(), beer.type(), beer.description(), manufacturer);
+        final var beerToUpdate = this.beerJPAMapper.toJpa(beer);
         final var updatedBeer = this.beerJPARepository.save(beerToUpdate);
         return this.beerJPAMapper.toDomain(updatedBeer);
     }

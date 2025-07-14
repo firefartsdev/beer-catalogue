@@ -29,7 +29,7 @@ class GetBeerUseCaseTest {
     void shouldReturnBeerWhenExists() {
         UUID beerId = UUID.randomUUID();
         Manufacturer manufacturer = new Manufacturer(UUID.randomUUID(), "Brew Co", "Spain");
-        Beer beer = new Beer(beerId, "Test", 5.0, "Ale", "Test desc", manufacturer);
+        Beer beer = new Beer(beerId, "Test", 5.0, "Ale", "Test desc", manufacturer, null, null);
 
         when(beerRepository.findById(beerId)).thenReturn(Optional.of(beer));
 

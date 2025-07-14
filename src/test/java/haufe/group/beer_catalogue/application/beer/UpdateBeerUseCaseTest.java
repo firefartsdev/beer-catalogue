@@ -35,8 +35,8 @@ class UpdateBeerUseCaseTest {
         UUID manufacturerId = UUID.randomUUID();
         Manufacturer manufacturer = new Manufacturer(manufacturerId, "Brew Co", "Spain");
 
-        Beer existingBeer = new Beer(beerId, "Old", 4.5, "Ale", "Old desc", manufacturer);
-        Beer updatedBeer = new Beer(beerId, "New", 5.0, "Lager", "New desc", manufacturer);
+        Beer existingBeer = new Beer(beerId, "Old", 4.5, "Ale", "Old desc", manufacturer, null, null);
+        Beer updatedBeer = new Beer(beerId, "New", 5.0, "Lager", "New desc", manufacturer, null, null);
 
         when(beerRepository.findById(beerId)).thenReturn(Optional.of(existingBeer));
         when(beerRepository.update(beerId, updatedBeer)).thenReturn(updatedBeer);
@@ -52,8 +52,8 @@ class UpdateBeerUseCaseTest {
         Manufacturer oldManufacturer = new Manufacturer(UUID.randomUUID(), "Old", "Spain");
         Manufacturer newManufacturer = new Manufacturer(UUID.randomUUID(), "New", "Spain");
 
-        Beer existingBeer = new Beer(beerId, "Old", 4.5, "Ale", "Old desc", oldManufacturer);
-        Beer updatedBeer = new Beer(beerId, "New", 5.0, "Lager", "New desc", newManufacturer);
+        Beer existingBeer = new Beer(beerId, "Old", 4.5, "Ale", "Old desc", oldManufacturer, null, null);
+        Beer updatedBeer = new Beer(beerId, "New", 5.0, "Lager", "New desc", newManufacturer, null, null);
 
         when(beerRepository.findById(beerId)).thenReturn(Optional.of(existingBeer));
         when(manufacturerRepository.findById(newManufacturer.id())).thenReturn(Optional.of(newManufacturer));
@@ -69,7 +69,7 @@ class UpdateBeerUseCaseTest {
     void shouldThrowExceptionIfBeerDoesNotExist() {
         UUID beerId = UUID.randomUUID();
         Manufacturer manufacturer = new Manufacturer(UUID.randomUUID(), "Brew Co", "Spain");
-        Beer beer = new Beer(beerId, "New", 5.0, "Lager", "Desc", manufacturer);
+        Beer beer = new Beer(beerId, "New", 5.0, "Lager", "Desc", manufacturer, null, null);
 
         when(beerRepository.findById(beerId)).thenReturn(Optional.empty());
 
@@ -84,8 +84,8 @@ class UpdateBeerUseCaseTest {
         Manufacturer oldManu = new Manufacturer(UUID.randomUUID(), "Old", "Spain");
         Manufacturer newManu = new Manufacturer(UUID.randomUUID(), "New", "Spain");
 
-        Beer existing = new Beer(beerId, "Old", 4.0, "IPA", "desc", oldManu);
-        Beer update = new Beer(beerId, "New", 5.0, "Pale", "desc2", newManu);
+        Beer existing = new Beer(beerId, "Old", 4.0, "IPA", "desc", oldManu, null, null);
+        Beer update = new Beer(beerId, "New", 5.0, "Pale", "desc2", newManu, null, null);
 
         when(beerRepository.findById(beerId)).thenReturn(Optional.of(existing));
         when(manufacturerRepository.findById(newManu.id())).thenReturn(Optional.empty());

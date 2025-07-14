@@ -31,6 +31,9 @@ public class BeerJPAEntity {
     @Column(length = 1000)
     private String description;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "manufacturer_id", nullable = false)
     private ManufacturerJPAEntity manufacturer;
