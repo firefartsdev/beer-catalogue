@@ -1,0 +1,24 @@
+🎉 {{ .Chart.Name }} has been successfully deployed to the '{{ .Release.Namespace }}' namespace.
+
+🔗 Application Info:
+  - Image: {{ .Values.app.image }}
+  - Port: {{ .Values.app.port }}
+
+🗄️ Database configuration:
+  - Host: {{ .Values.db.host }}
+  - Port: {{ .Values.db.port }}
+  - Name: {{ .Values.db.name }}
+  - Credentials stored in secret: {{ .Values.secrets.db }}
+
+☁️ AWS S3 Credentials loaded from secret: {{ .Values.secrets.s3 }}
+
+{{- if and .Values.service (hasKey .Values.service "type") }}
+🛰️ Service:
+  - Type: {{ .Values.service.type }}
+{{- end }}
+
+🧪 To verify the app is running:
+  kubectl logs deployment/beer-app -n {{ .Release.Namespace }}
+
+🌍 If using Minikube and NodePort:
+  minikube service beer-app -n {{ .Release.Namespace }}
