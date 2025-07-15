@@ -22,9 +22,7 @@ import java.util.UUID;
 public class BeerRepositoryImpl implements BeerRepository {
 
     private final BeerJPARepository beerJPARepository;
-
     private final BeerJPAMapper beerJPAMapper;
-    private final ManufacturerJPAMapper manufacturerJPAMapper;
 
     @Override
     public Page<Beer> findAll(BeerSort sort, int page, int size) {

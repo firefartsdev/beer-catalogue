@@ -1,0 +1,5 @@
+aws:
+  s3:
+    region: dummy
+    access-key: dummy
+    secret-key: dummy
