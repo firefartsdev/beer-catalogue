@@ -1,0 +1,240 @@
+openapi: 3.0.0
+info:
+  title: Beer Catalogue API
+  version: 1.0.0
+paths:
+  /api/v1/beers:
+    get:
+      summary: List beers
+      parameters:
+      - name: sortBy
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: order
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: page
+        in: query
+        schema:
+          type: integer
+        required: false
+      - name: size
+        in: query
+        schema:
+          type: integer
+        required: false
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Create beer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                abv:
+                  type: number
+                type:
+                  type: string
+                description:
+                  type: string
+                manufacturerId:
+                  type: string
+                  format: uuid
+                image:
+                  type: string
+                  format: binary
+              required:
+              - name
+              - abv
+              - type
+              - manufacturerId
+              - image
+      responses:
+        '201':
+          description: Created
+  /api/v1/beers/{beerId}:
+    get:
+      summary: Get beer by ID
+      parameters:
+      - name: beerId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+    put:
+      summary: Update beer
+      parameters:
+      - name: beerId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeerDTO'
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: Delete beer
+      parameters:
+      - name: beerId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+  /api/v1/beers/search:
+    post:
+      summary: Search beers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeerSearchRequestDTO'
+      responses:
+        '200':
+          description: OK
+  /api/v1/manufacturers:
+    get:
+      summary: List manufacturers
+      parameters:
+      - name: sortBy
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: order
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: page
+        in: query
+        schema:
+          type: integer
+        required: false
+      - name: size
+        in: query
+        schema:
+          type: integer
+        required: false
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Create manufacturer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManufacturerDTO'
+      responses:
+        '201':
+          description: Created
+  /api/v1/manufacturers/{manufacturerId}:
+    get:
+      summary: Get manufacturer by ID
+      parameters:
+      - name: manufacturerId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+    put:
+      summary: Update manufacturer
+      parameters:
+      - name: manufacturerId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManufacturerDTO'
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: Delete manufacturer
+      parameters:
+      - name: manufacturerId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+components:
+  schemas:
+    BeerDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        abv:
+          type: number
+        type:
+          type: string
+        description:
+          type: string
+        manufacturer:
+          $ref: '#/components/schemas/ManufacturerDTO'
+        image:
+          type: string
+        imageBase64:
+          type: string
+    BeerSearchRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        abv:
+          type: number
+        manufacturerName:
+          type: string
+        page:
+          type: integer
+        size:
+          type: integer
+        direction:
+          type: string
+        sortBy:
+          type: string
+    ManufacturerDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        country:
+          type: string
