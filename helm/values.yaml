@@ -1,0 +1,10 @@
+namespace: beer-app
+
+app:
+  image: beer-app:latest
+  imagePullPolicy: Never
+  port: 8080
+
+secrets:
+  s3: s3-credentials
+  db: aws-rds-db-credentials
