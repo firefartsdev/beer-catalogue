@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ManufacturerSort extends BaseSort {
 
-    public ManufacturerSort(String direction, String sortBy) {
+    public ManufacturerSort(final String direction, final String sortBy) {
         super(direction, sortBy);
     }
 

@@ -18,7 +18,7 @@ public interface BeerJPAMapper {
 
     BeerJPAEntity toJpa(Beer beer);
 
-    default Specification<BeerJPAEntity> fromCriteria(BeerSearchCriteria criteria) {
+    default Specification<BeerJPAEntity> fromCriteria(final BeerSearchCriteria criteria) {
         Specification<BeerJPAEntity> spec = null;
 
         if(criteria.name() != null && !criteria.name().isBlank()) {

@@ -22,7 +22,7 @@ public class ManufacturerRepositoryImpl implements ManufacturerRepository {
     private final ManufacturerJPAMapper manufacturerJPAMapper;
 
     @Override
-    public Page<Manufacturer> findAll(ManufacturerSort sort, int page, int size) {
+    public Page<Manufacturer> findAll(final ManufacturerSort sort, final int page, final int size) {
         Sort.Direction direction = sort.getDirection().equals(SortDirection.ASC.toString()) ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort jpsSort = Sort.by(direction, sort.getSortBy());
         final var pageable = PageRequest.of(page, size, jpsSort);
@@ -32,27 +32,27 @@ public class ManufacturerRepositoryImpl implements ManufacturerRepository {
     }
 
     @Override
-    public Optional<Manufacturer> findById(UUID manufacturerId) {
+    public Optional<Manufacturer> findById(final UUID manufacturerId) {
         final var manufacturer = this.manufacturerJPARepository.findById(manufacturerId);
         return manufacturer
                 .map(this.manufacturerJPAMapper::toDomain);
     }
 
     @Override
-    public Manufacturer create(Manufacturer manufacturer) {
+    public Manufacturer create(final Manufacturer manufacturer) {
         final var newManufacturer = this.manufacturerJPARepository.save(this.manufacturerJPAMapper.toJpa(manufacturer));
         return this.manufacturerJPAMapper.toDomain(newManufacturer);
     }
 
     @Override
-    public Manufacturer update(UUID manufacturerId, Manufacturer manufacturer) {
+    public Manufacturer update(final UUID manufacturerId, final Manufacturer manufacturer) {
         final var manufacturerToUpdate = new ManufacturerJPAEntity(manufacturerId, manufacturer.name(), manufacturer.country());
         final var updatedManufacturer = this.manufacturerJPARepository.save(manufacturerToUpdate);
         return this.manufacturerJPAMapper.toDomain(updatedManufacturer);
     }
 
     @Override
-    public void delete(UUID manufacturerId) {
+    public void delete(final UUID manufacturerId) {
         this.manufacturerJPARepository.deleteById(manufacturerId);
     }
 }

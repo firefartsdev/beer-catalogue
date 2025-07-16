@@ -5,7 +5,7 @@ import java.util.List;
 
 public class BeerSort extends BaseSort {
 
-    public BeerSort(String direction, String sortBy) {
+    public BeerSort(final String direction, final String sortBy) {
         super(direction, sortBy);
     }
 

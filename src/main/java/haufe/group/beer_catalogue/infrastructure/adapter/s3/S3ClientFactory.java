@@ -11,7 +11,7 @@ public class S3ClientFactory {
 
     private final S3Client s3Client;
 
-    public S3ClientFactory(@Value("${aws.s3.region}") String region) {
+    public S3ClientFactory(@Value("${aws.s3.region}") final String region) {
         this.s3Client = S3Client.builder()
                 .region(Region.of(region))
                 .credentialsProvider(DefaultCredentialsProvider.create())

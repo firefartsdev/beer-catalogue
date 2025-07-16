@@ -29,7 +29,7 @@ public class S3Repository implements ImagesRepository {
     private String region;
 
     @Override
-    public String upload(MultipartFile file) {
+    public String upload(final MultipartFile file) {
         S3Client s3Client = s3ClientFactory.getS3Client();
         String key = UUID.randomUUID() + "-" + file.getOriginalFilename();
         try {
@@ -48,7 +48,7 @@ public class S3Repository implements ImagesRepository {
     }
 
     @Override
-    public String download(String url) {
+    public String download(final String url) {
         String key = URLDecoder.decode(url.substring(url.lastIndexOf("/") + 1), StandardCharsets.UTF_8);
         S3Client s3Client = s3ClientFactory.getS3Client();
         try {
@@ -65,7 +65,7 @@ public class S3Repository implements ImagesRepository {
     }
 
     @Override
-    public void delete(String url) {
+    public void delete(final String url) {
         final var s3Client = s3ClientFactory.getS3Client();
         try {
             String key = URLDecoder.decode(url.substring(url.lastIndexOf("/") + 1), StandardCharsets.UTF_8);

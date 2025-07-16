@@ -32,10 +32,10 @@ public class BeerController {
 
     @GetMapping
     public ResponseEntity<Page<BeerDTO>> list(
-            @RequestParam(defaultValue = "name") String sortBy,
-            @RequestParam(defaultValue = "ASC") String order,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "name") final String sortBy,
+            @RequestParam(defaultValue = "ASC") final String order,
+            @RequestParam(defaultValue = "0") final int page,
+            @RequestParam(defaultValue = "10") final int size
 
     ) {
         final var sort = new BeerSort(order, sortBy);
@@ -45,31 +45,31 @@ public class BeerController {
     }
 
     @GetMapping("/{beerId}")
-    public ResponseEntity<BeerDTO> get(@PathVariable UUID beerId) {
+    public ResponseEntity<BeerDTO> get(@PathVariable final UUID beerId) {
         final var beer = this.getBeerUseCase.getBeer(beerId);
         return ResponseEntity.ok(this.beerDTOMapper.toDTO(beer));
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<BeerDTO> create(@ModelAttribute @Valid CreateBeerRequestDTO createBeerRequestDTO) {
+    public ResponseEntity<BeerDTO> create(@ModelAttribute @Valid final CreateBeerRequestDTO createBeerRequestDTO) {
         final var createdBeer = this.createBeerUseCase.createBeer(this.beerDTOMapper.toDomainFromCreate(createBeerRequestDTO), createBeerRequestDTO.getImage());
         return ResponseEntity.status(CREATED).body(this.beerDTOMapper.toDTO(createdBeer));
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity<BeerDTO> update(@PathVariable UUID beerId, @RequestBody BeerDTO beerDTO) {
+    public ResponseEntity<BeerDTO> update(@PathVariable final UUID beerId, @RequestBody final BeerDTO beerDTO) {
         final var updatedBeer = this.updateBeerUseCase.updateBeer(beerId, this.beerDTOMapper.toDomain(beerDTO));
         return ResponseEntity.ok(this.beerDTOMapper.toDTO(updatedBeer));
     }
 
     @DeleteMapping("/{beerId}")
-    public ResponseEntity<Void> delete(@PathVariable UUID beerId) {
+    public ResponseEntity<Void> delete(@PathVariable final UUID beerId) {
         this.deleteBeerUseCase.deleteBeer(beerId);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/search")
-    public ResponseEntity<Page<BeerDTO>> search(@RequestBody BeerSearchRequestDTO beerSearchRequestDTO) {
+    public ResponseEntity<Page<BeerDTO>> search(@RequestBody final BeerSearchRequestDTO beerSearchRequestDTO) {
         final var criteria = this.beerDTOMapper.toCriteria(beerSearchRequestDTO);
         final var pageable = beerSearchRequestDTO.resolvedPageable();
 

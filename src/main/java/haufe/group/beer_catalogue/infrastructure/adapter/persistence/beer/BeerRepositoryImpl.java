@@ -25,7 +25,7 @@ public class BeerRepositoryImpl implements BeerRepository {
     private final BeerJPAMapper beerJPAMapper;
 
     @Override
-    public Page<Beer> findAll(BeerSort sort, int page, int size) {
+    public Page<Beer> findAll(final BeerSort sort, final int page, final int size) {
         Sort.Direction direction = sort.getDirection().equals(SortDirection.ASC.toString()) ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort jpsSort = Sort.by(direction, sort.getSortBy());
         final var pageable = PageRequest.of(page, size, jpsSort);
@@ -35,7 +35,7 @@ public class BeerRepositoryImpl implements BeerRepository {
     }
 
     @Override
-    public Page<Beer> search(BeerSearchCriteria criteria, BeerSort sort, int page, int size) {
+    public Page<Beer> search(final BeerSearchCriteria criteria, final BeerSort sort, final int page, final int size) {
         Specification<BeerJPAEntity> spec = this.beerJPAMapper.fromCriteria(criteria);
         Sort.Direction direction = sort.getDirection().equals(SortDirection.ASC.toString()) ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort jpsSort = Sort.by(direction, sort.getSortBy());
@@ -46,27 +46,27 @@ public class BeerRepositoryImpl implements BeerRepository {
     }
 
     @Override
-    public Optional<Beer> findById(UUID beerId) {
+    public Optional<Beer> findById(final UUID beerId) {
         final var beer = beerJPARepository.findById(beerId);
         return beer
                 .map(this.beerJPAMapper::toDomain);
     }
 
     @Override
-    public Beer create(Beer beer) {
+    public Beer create(final Beer beer) {
         final var newBeer = this.beerJPARepository.save(this.beerJPAMapper.toJpa(beer));
         return this.beerJPAMapper.toDomain(newBeer);
     }
 
     @Override
-    public Beer update(UUID beerId, Beer beer) {
+    public Beer update(final UUID beerId, final Beer beer) {
         final var beerToUpdate = this.beerJPAMapper.toJpa(beer);
         final var updatedBeer = this.beerJPARepository.save(beerToUpdate);
         return this.beerJPAMapper.toDomain(updatedBeer);
     }
 
     @Override
-    public void delete(UUID beerId) {
+    public void delete(final UUID beerId) {
         this.beerJPARepository.deleteById(beerId);
     }
 }

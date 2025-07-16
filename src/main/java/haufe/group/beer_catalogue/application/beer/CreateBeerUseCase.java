@@ -19,7 +19,7 @@ public class CreateBeerUseCase {
     private final ManufacturerRepository manufacturerRepository;
     private final ImagesRepository imagesRepository;
 
-    public Beer createBeer(Beer beer, MultipartFile image) {
+    public Beer createBeer(final Beer beer, final MultipartFile image) {
         final var manufacturer = this.manufacturerRepository.findById(beer.manufacturer().id())
                 .orElseThrow(() -> new EntityNotFoundException("Manufacturer", beer.manufacturer().id()));
         String imageUrl = null;
@@ -50,7 +50,7 @@ public class CreateBeerUseCase {
                     log.error("[CreateBeerUseCase.createBeer] - error deleting image {} beer -> {}", imageUrl, e.getMessage());
                 }
             }
+            return null;
         }
-        return null;
     }
 }

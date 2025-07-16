@@ -27,10 +27,10 @@ public class ManufacturerController {
 
     @GetMapping
     public ResponseEntity<Page<ManufacturerDTO>> list(
-            @RequestParam(defaultValue = "name") String sortBy,
-            @RequestParam(defaultValue = "ASC") String order,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "name") final String sortBy,
+            @RequestParam(defaultValue = "ASC") final String order,
+            @RequestParam(defaultValue = "0") final int page,
+            @RequestParam(defaultValue = "10") final int size
     ) {
         final var sort = new ManufacturerSort(order, sortBy);
         final var manufacturers = this.listManufacturersUseCase.listManufacturers(sort, page, size);
@@ -39,25 +39,25 @@ public class ManufacturerController {
     }
 
     @GetMapping("/{manufacturerId}")
-    public ResponseEntity<ManufacturerDTO> get(@PathVariable UUID manufacturerId) {
+    public ResponseEntity<ManufacturerDTO> get(@PathVariable final UUID manufacturerId) {
         final var manufacturer = this.getManufacturerUseCase.getManufacturer(manufacturerId);
         return ResponseEntity.ok(this.manufacturerDTOMapper.toDTO(manufacturer));
     }
 
     @PostMapping
-    public ResponseEntity<ManufacturerDTO> create(@RequestBody @Valid ManufacturerDTO manufacturerDTO) {
+    public ResponseEntity<ManufacturerDTO> create(@RequestBody @Valid final ManufacturerDTO manufacturerDTO) {
         final var createdManufacturer = this.createManufacturerUseCase.createManufacturer(this.manufacturerDTOMapper.toDomain(manufacturerDTO));
         return ResponseEntity.status(CREATED).body(this.manufacturerDTOMapper.toDTO(createdManufacturer));
     }
 
     @PutMapping("{manufacturerId}")
-    public ResponseEntity<ManufacturerDTO> update(@PathVariable UUID manufacturerId, @RequestBody ManufacturerDTO manufacturerDTO) {
+    public ResponseEntity<ManufacturerDTO> update(@PathVariable final UUID manufacturerId, @RequestBody final ManufacturerDTO manufacturerDTO) {
         final var updatedManufacturer = this.updateManufacturerUseCase.updateManufacturer(manufacturerId, this.manufacturerDTOMapper.toDomain(manufacturerDTO));
         return ResponseEntity.ok(this.manufacturerDTOMapper.toDTO(updatedManufacturer));
     }
 
     @DeleteMapping("/{manufacturerId}")
-    public ResponseEntity<Void> delete(@PathVariable UUID manufacturerId) {
+    public ResponseEntity<Void> delete(@PathVariable final UUID manufacturerId) {
         this.deleteManufacturerUseCase.deleteManufacturer(manufacturerId);
         return ResponseEntity.noContent().build();
     }
