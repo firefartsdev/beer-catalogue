@@ -30,13 +30,13 @@ with the following environment variables:
 
 To run the application quickly using Docker, follow these steps:
 
-**1. Prepare the environment variables**
+**1. Prepare the environment variables**  
 In the `/docker-compose` folder, you will find an `.env.sample` file
 that serves as a template showing which are the environment variables
 you need to define. These variables are related with the S3 bucket and 
 PostgreSQL database.
 
-**2. Build and start the containers**
+**2. Build and start the containers**  
 From the project root, run the following command to build the Docker image
 and start both the application and the PostgreSQL database using Docker
 Compose.
@@ -51,7 +51,7 @@ This will:
 - Start the application container with the necessary configuration to 
 connect to both the database and the S3 bucket.
 
-**3. Access the application**
+**3. Access the application**  
 Once the containers are up and running, the application will be accessible
 at:
 
@@ -59,7 +59,7 @@ at:
 http://localhost:8080
 ```
 
-**4. API Testing**
+**4. API Testing**  
 You can now test the API endpoints using a tool like Postman or cURL.
 All available endpoints are documented in the `openapi.yaml` file
 located at the resources folder.
@@ -68,7 +68,7 @@ located at the resources folder.
 
 The application can be deployed to a Kubernetes cluster using Helm.
 
-**1. Create the namespace**
+**1. Create the namespace**  
 Apply the namespace manifest:
 ```code
 kubectl appliy -f namespace.yaml
@@ -77,7 +77,7 @@ kubectl appliy -f namespace.yaml
 This will create the `beer-app` namespace, where all related resources
 will be deployed.
 
-**2. Create the required secrets**
+**2. Create the required secrets**  
 Make sure the following Kubernetes secrets are created in the `berr-app`
 namespace:
 - `s3-credentials`: Contains the necessary S3 environment variables:
@@ -110,7 +110,7 @@ kubectl create secret generic aws-rds-db-credentials \
   -n beer-app
 ```
 
-**3. Review the Helm chart configuration**
+**3. Review the Helm chart configuration**  
 The main Helm configuration is defined in `values.yaml`:
 ```code
 namespace: beer-app
@@ -151,14 +151,14 @@ store.
 Once the image is available in the cluster and `imagePullPolicy: Never`
 is set, Kubernetes will use it directly during deployment.
 
-**4. Deploy the application**
+**4. Deploy the application**  
 Install or upgrade the Helm release:
 
 ```code
 helm upgrade --install beer-app ./path-to-your-chart --namespace beer-app
 ```
 
-**5. Verify the deployment**
+**5. Verify the deployment**  
 Check that the pods and deployment are running correctly:
 
 ```code
@@ -166,7 +166,7 @@ kubectl get pods -n beer-app
 kubectl get deployments -n beer-app
 ```
 
-**6. Access the application
+**6. Access the application**  
 The application is exposed through a Kubernetes `Service` defined in the
 `beer-app-service.yaml` file:
 ```code
