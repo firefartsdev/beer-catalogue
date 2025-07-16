@@ -110,7 +110,7 @@ kubectl create secret generic aws-rds-db-credentials \
   -n beer-app
 ```
 
-** 3. Review the Helm chart configuration
+**3. Review the Helm chart configuration**
 The main Helm configuration is defined in `values.yaml`:
 ```code
 namespace: beer-app
