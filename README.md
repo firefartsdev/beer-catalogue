@@ -41,7 +41,7 @@ From the project root, run the following command to build the Docker image
 and start both the application and the PostgreSQL database using Docker
 Compose.
 
-```bash
+```code
 docker-compose up --build
 ```
 This will:
@@ -55,7 +55,7 @@ connect to both the database and the S3 bucket.
 Once the containers are up and running, the application will be accessible
 at:
 
-```bash
+```code
 http://localhost:8080
 ```
 
@@ -70,7 +70,7 @@ The application can be deployed to a Kubernetes cluster using Helm.
 
 **1. Create the namespace**
 Apply the namespace manifest:
-```bash
+```code
 kubectl appliy -f namespace.yaml
 ```
 
@@ -94,7 +94,7 @@ namespace:
 
 You can create the using `kubectl` like this:
 
-```bash
+```code
 kubectl create secret generic s3-credentials \
   --from-literal=AWS_ACCESS_KEY_ID=your-access-key-id \
   --from-literal=AWS_SECRET_ACCESS_KEY=your-secret-key \
@@ -112,7 +112,7 @@ kubectl create secret generic aws-rds-db-credentials \
 
 **3. Review the Helm chart configuration
 The main Helm configuration is defined in `values.yaml`:
-```bash
+```code
 namespace: beer-app
 
 app:
@@ -132,7 +132,7 @@ remote registry.
 If you are running a local Kubernetes cluster like Minikube, follow these
 steps:
 
-```bash
+```code
 eval $(minikube docker-env)
 docker build -t beer-app:latest .
 ```
@@ -140,7 +140,7 @@ docker build -t beer-app:latest .
 This command builds the Docker image directly inside the Minikube Docker
 daemon, making it available to the cluster.
 
-```bash
+```code
 docker build -t beer-app:latest .
 kind load docker-image beer-app:latest --name your-kind-cluster
 ```
@@ -154,14 +154,14 @@ is set, Kubernetes will use it directly during deployment.
 **4. Deploy the application**
 Install or upgrade the Helm release:
 
-```bash
+```code
 helm upgrade --install beer-app ./path-to-your-chart --namespace beer-app
 ```
 
 **5. Verify the deployment**
 Check that the pods and deployment are running correctly:
 
-```bash
+```code
 kubectl get pods -n beer-app
 kubectl get deployments -n beer-app
 ```
@@ -169,7 +169,7 @@ kubectl get deployments -n beer-app
 **6. Access the application
 The application is exposed through a Kubernetes `Service` defined in the
 `beer-app-service.yaml` file:
-```bash
+```code
 apiVersion: v1
 kind: Service
 metadata:
@@ -191,18 +191,18 @@ This service:
 - Uses `type: NodePort`, making it accessible from outside the cluster
 
 Apply the service manifest:
-```bash
+```code
 kubectl apply -f beer-app-service.yaml
 ```
 
 You can retrieve the URL to access the application using:
-```bash
+```code
 minikube service beer-app -n beer-app --url
 ```
 
 This will return output similar to:
 
-```bash
+```code
 🏃  Starting tunnel for service beer-app.
 |-----------|------------|-------------|-----------------------------|
 | NAMESPACE |   NAME     | TARGET PORT |             URL             |
@@ -215,7 +215,7 @@ This will return output similar to:
 Use one of the listed URLs to test the API in Postman or using cURL,
 for example:
 
-```bash
+```code
 curl http://192.168.49.2:51843/api/v1/beers
 ```
 
