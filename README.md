@@ -20,8 +20,9 @@ database. For the database, a `docker-compose` file is provided y the
 `/docker-compose` folder to start a PostgreSQL container.
 
 The application includes a service that uses an S3 bucket to manage beer
-images. To enable this functionality, the application must be started
-with the following environment variables:
+images. To enable this functionality, you will need to update the
+`applcation-local.yml`with your bucket`s data and the application must 
+be started with the following environment variables:
 
 - AWS_SECRET_KEY_ID
 - AWS_SECRET_ACCESS_KEY
