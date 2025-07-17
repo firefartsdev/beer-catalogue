@@ -428,6 +428,7 @@ curl --location 'localhost:8080/api/v1/beers' \
 ```code
 curl --location --request PUT 'localhost:8080/api/v1/manufacturers/d4ebd7a8-c5fc-4e79-b2f0-c75571b984b0' \
 --header 'Content-Type: application/json' \
+--header 'X-User-Role: ADMIN' \
 --data '{
     "name": "Manufacturer test 2 updated",
     "country": "Spain updated"
@@ -436,12 +437,14 @@ curl --location --request PUT 'localhost:8080/api/v1/manufacturers/d4ebd7a8-c5fc
 
 ### DELETE - Delete beer
 ```code
-curl --location --request DELETE 'localhost:8080/api/v1/manufacturers/1dbcae9a-99a3-4f94-8e81-563aa08bb03e'
+curl --location --request DELETE 'localhost:8080/api/v1/manufacturers/1dbcae9a-99a3-4f94-8e81-563aa08bb03e' \
+--header 'X-User-Role: ADMIN'
 ```
 
 ### POST - Search beer
 ```code
 curl --location 'localhost:8080/api/v1/beers/search' \
+--header 'X-User-Role: ADMIN' \
 --header 'Content-Type: application/json' \
 --data '{
     "name": null,
