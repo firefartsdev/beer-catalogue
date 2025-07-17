@@ -14,9 +14,9 @@ The application is prepared to run in three different ways:
 
 ### Locally
 
-There is a properties filel `application-local.yml` with the necessary 
+There is a properties file `application-local.yml` with the necessary 
 configuration to run the application locally and connect to a PostgreSQL 
-database. For the database, a `docker-compose` file is provided y the 
+database. For the database, a `docker-compose` file is provided in the 
 `/docker-compose` folder to start a PostgreSQL container.
 
 The application includes a service that uses an S3 bucket to manage beer
