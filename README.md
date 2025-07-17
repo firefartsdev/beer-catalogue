@@ -93,7 +93,7 @@ namespace:
     - `DB_USERNAME`
     - `DB_PASSWORD`
 
-You can create the using `kubectl` like this:
+You can create them using `kubectl` like this:
 
 ```code
 kubectl create secret generic s3-credentials \
