@@ -361,6 +361,12 @@ The database connection details are injected into the application via
 of the Helm chart. These secrets are referenced in the deployment template and
 mapped to environment variables expected by the application.
 
+For simplicity, the application currently uses Hibernate´s automatic schema 
+generation feature with `spring.jpa.hibernate.ddl-auto=update`. While this is
+convenient for development, it is not recommended for production environments.
+I'm used to working with tools like **flyway** or **Liquibase** to manage
+the database migrations in professional and production settings.
+
 While configuring the connection to the AWS RDS database, I encountered a couple
 of issues:
 
@@ -374,7 +380,7 @@ This issue caused some headaches unit I found out the problem. I eventually
 fixed it by passing the full `DB_URL` as a single environment variable set
 explicitly in the Kubernetes secrets.
 - Another issue I encountered was related to **access permissions**. When I 
-first created the RDS instance, I forgot to configure an appropiate **security
+first created the RDS instance, I forgot to configure an appropriate **security
 group policy** to allow inbound connections from my Kubernetes cluster. As a
 result, the application could not reach the database even though the 
 configuration appeared correct. Once I updated the RDS security group to allow
