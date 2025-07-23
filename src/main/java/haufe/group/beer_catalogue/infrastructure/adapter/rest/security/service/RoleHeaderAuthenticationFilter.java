@@ -1,9 +1,12 @@
-package haufe.group.beer_catalogue.infrastructure.adapter.rest.security;
+package haufe.group.beer_catalogue.infrastructure.adapter.rest.security.service;
 
+import haufe.group.beer_catalogue.infrastructure.adapter.rest.security.Role;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,18 +20,27 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class RoleHeaderAuthenticationFilter extends OncePerRequestFilter {
+
+    private final JwtService jwtService;
 
     @Override
     protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain) throws ServletException, IOException {
-        final var roleHeader = Optional.ofNullable(request.getHeader("X-User-Role"));
-        final var role = roleHeader
-                .map(Role::valueOf)
-                .orElse(Role.ANONYMOUS);
+        String authenticationHeader = request.getHeader("Authorization");
+        if(authenticationHeader != null && authenticationHeader.startsWith("Bearer ")) {
+            try {
+                final var token = authenticationHeader.substring(7);
+                final var role = jwtService.extractRole(token);
 
-        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
-        Authentication authentication = new UsernamePasswordAuthenticationToken(role.name(), null, authorities);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+                final var authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+                final var authentication = new UsernamePasswordAuthenticationToken("user", null, authorities);
+
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (JwtException e) {
+                SecurityContextHolder.clearContext();
+            }
+        }
 
         filterChain.doFilter(request, response);
     }

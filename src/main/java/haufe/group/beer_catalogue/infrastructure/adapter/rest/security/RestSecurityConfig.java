@@ -1,5 +1,6 @@
 package haufe.group.beer_catalogue.infrastructure.adapter.rest.security;
 
+import haufe.group.beer_catalogue.infrastructure.adapter.rest.security.service.RoleHeaderAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,7 @@ public class RestSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(GET, "/api/v1/beers/**", "/api/v1/manufacturers/**").permitAll()
                         .requestMatchers("/api/v1/beers/search").permitAll()
+                        .requestMatchers("/api/v1/authentication").permitAll()
                         .requestMatchers("/api/v1/manufacturers/**").hasAnyRole(Role.MANUFACTURER.name(), Role.ADMIN.name())
                         .anyRequest().hasRole(Role.ADMIN.name())
                 );
