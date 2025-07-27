@@ -18,8 +18,7 @@ import org.springframework.security.web.access.expression.WebExpressionAuthoriza
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.PUT;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -40,6 +39,7 @@ public class RestSecurityConfig {
                         .requestMatchers("/api/v1/beers/search").permitAll()
                         .requestMatchers("/api/v1/authentication").permitAll()
                         .requestMatchers(PUT, "/api/v1/manufacturers/**").access(canEditManufacturerDataManager)
+                        .requestMatchers(PATCH, "/api/v1/manufacturers/**").access(canEditManufacturerDataManager)
                         .requestMatchers( "/api/v1/manufacturers/**").hasAnyRole(Role.MANUFACTURER.name(), Role.ADMIN.name())
                         .anyRequest().hasRole(Role.ADMIN.name())
                 );
