@@ -40,6 +40,7 @@ public class RestSecurityConfig {
                         .requestMatchers("/api/v1/beers/search").permitAll()
                         .requestMatchers("/api/v1/authentication").permitAll()
                         .requestMatchers(PUT, "/api/v1/manufacturers/**").access(canEditManufacturerDataManager)
+                        .requestMatchers( "/api/v1/manufacturers/**").hasAnyRole(Role.MANUFACTURER.name(), Role.ADMIN.name())
                         .anyRequest().hasRole(Role.ADMIN.name())
                 );
 
