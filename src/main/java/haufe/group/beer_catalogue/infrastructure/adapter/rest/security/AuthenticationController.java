@@ -1,12 +1,13 @@
 package haufe.group.beer_catalogue.infrastructure.adapter.rest.security;
 
 import haufe.group.beer_catalogue.infrastructure.adapter.rest.security.service.JwtService;
+import haufe.group.beer_catalogue.infrastructure.adapter.rest.security.vo.Role;
+import haufe.group.beer_catalogue.infrastructure.adapter.rest.security.vo.UserAuthentication;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 import java.util.Optional;
@@ -19,15 +20,15 @@ public class AuthenticationController {
     private final JwtService jwtService;
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> authenticate(@RequestParam(required = false) String role) {
+    public ResponseEntity<Map<String, String>> authenticate(@RequestBody @Valid final UserAuthentication userAuthentication) {
         Role assignedRole;
         try {
-            assignedRole = Role.valueOf(Optional.ofNullable(role).orElse("ANONYMOUS").toUpperCase());
+            assignedRole = Role.valueOf(Optional.ofNullable(userAuthentication.role()).orElse("ANONYMOUS").toUpperCase());
         } catch (final IllegalArgumentException e) {
             assignedRole = Role.ANONYMOUS;
         }
 
-        String token = jwtService.generateToken(assignedRole);
+        String token = jwtService.generateToken(assignedRole, userAuthentication.userId());
         return ResponseEntity.ok(Map.of(
                 "role", assignedRole.name(),
                 "token", token
