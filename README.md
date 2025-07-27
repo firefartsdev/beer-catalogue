@@ -14,14 +14,15 @@ The application is prepared to run in three different ways:
 
 ### Locally
 
-There is a properties filel `application-local.yml` with the necessary 
+There is a properties file `application-local.yml` with the necessary 
 configuration to run the application locally and connect to a PostgreSQL 
-database. For the database, a `docker-compose` file is provided y the 
+database. For the database, a `docker-compose` file is provided in the 
 `/docker-compose` folder to start a PostgreSQL container.
 
 The application includes a service that uses an S3 bucket to manage beer
-images. To enable this functionality, the application must be started
-with the following environment variables:
+images. To enable this functionality, you will need to update the
+`applcation-local.yml`with your bucket`s data and the application must 
+be started with the following environment variables:
 
 - AWS_SECRET_KEY_ID
 - AWS_SECRET_ACCESS_KEY
@@ -92,7 +93,7 @@ namespace:
     - `DB_USERNAME`
     - `DB_PASSWORD`
 
-You can create the using `kubectl` like this:
+You can create them using `kubectl` like this:
 
 ```code
 kubectl create secret generic s3-credentials \
