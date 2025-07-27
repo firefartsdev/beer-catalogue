@@ -19,18 +19,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthenticationFilter extends OncePerRequestFilter {
 
+    private final static String TOKEN_PREFIX = "Bearer ";
+    private final static String ROLE_PREFIX = "ROLE_";
+    private final static String AUTHORIZATION_HEADER = "Authorization";
+
     private final JwtService jwtService;
 
     @Override
     protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain) throws ServletException, IOException {
-        String authenticationHeader = request.getHeader("Authorization");
-        if(authenticationHeader != null && authenticationHeader.startsWith("Bearer ")) {
+        String authenticationHeader = request.getHeader(AUTHORIZATION_HEADER);
+        if(authenticationHeader != null && authenticationHeader.startsWith(TOKEN_PREFIX)) {
             try {
-                final var token = authenticationHeader.substring(7);
+                final var token = authenticationHeader.substring(TOKEN_PREFIX.length());
                 final var role = jwtService.extractRole(token);
                 final var userId = jwtService.extractUserId(token);
 
-                final var authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+                final var authorities = List.of(new SimpleGrantedAuthority(ROLE_PREFIX + role.name()));
                 final var authentication = new UsernamePasswordAuthenticationToken(userId, null, authorities);
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
